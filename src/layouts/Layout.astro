@@ -17,9 +17,9 @@ const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, "");
     <header class="navbar">
       <div class="nav-container">
         <span class="logo">⚡ Project Portal</span>
-        <nav>
-          <a href={`${baseUrl}/`}>The Project</a>
-          <a href={`${baseUrl}/team`}>The Team</a>
+       <nav>
+          <a href={import.meta.env.BASE_URL}>The Project</a>
+          <a href={`${import.meta.env.BASE_URL}team/`}>The Team</a>
         </nav>
       </div>
     </header>

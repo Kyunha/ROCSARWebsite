@@ -25,7 +25,7 @@ export const PROJECT_INFO = {
 // Add or remove team members here
 export const TEAM_MEMBERS = [
   {
-    name: "Pedro Almeida Saraiva dos Reis Cunha",
+    name: "Pedro Cunha",
     role: "Hardware & Firmware Engineering",
     bio: "Engineering student at FEUP focusing on analog/RF circuit design, embedded RP2040 systems, and electromagnetic PCB simulation.",
     skills: ["RP2040", "C++/Rust", "LTspice", "EMerge 3D"]
@@ -37,9 +37,9 @@ export const TEAM_MEMBERS = [
     skills: ["FEUP", "Academic Advising", "Project Management"]
   },
   {
-    name: "Esmée Menting",
-    role: "SSC Project Supervisor",
-    bio: "Engineer at the Swedish Space Corporation, providing guidance, structural review, and campaign supervision.",
-    skills: ["SSC", "Aerospace Engineering", "Campaign Operations"]
+    name: "Alberto",
+    role: "Berto",
+    bio: "Erto",
+    skills: ["Al", "Ber", "To"]
   }
 ];

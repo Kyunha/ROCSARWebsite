@@ -22,33 +22,27 @@ const { name, role, bio, skills } = Astro.props;
 
 <style>
   .card {
-    background: #181825;
-    border: 1px solid #313244;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-  .card:hover {
-    transform: translateY(-4px);
-    border-color: #89b4fa;
   }
   h3 {
     margin: 0;
-    color: #cdd6f4;
     font-size: 1.25rem;
   }
   .role {
-    color: #89b4fa;
+    color: var(--accent-color);
     font-size: 0.875rem;
     font-weight: 600;
     display: block;
     margin-top: 0.25rem;
   }
   .bio {
-    color: #a6adc8;
+    color: var(--subtext-color);
     font-size: 0.9rem;
     line-height: 1.5;
     margin: 1rem 0;
@@ -59,8 +53,8 @@ const { name, role, bio, skills } = Astro.props;
     gap: 0.4rem;
   }
   .tag {
-    background: #313244;
-    color: #cba6f7;
+    background: var(--tag-bg);
+    color: var(--tag-color);
     font-size: 0.75rem;
     font-family: monospace;
     padding: 0.25rem 0.5rem;

@@ -5,7 +5,7 @@ interface Props {
 
 const { title } = Astro.props;
 
-// Strip any trailing slash from base, then explicitly format routes
+// Ensures links work regardless of GitHub Pages sub-pathing
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
@@ -18,7 +18,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   <body>
     <header class="navbar">
       <div class="nav-container">
-        <span class="logo">⚡ Project Portal</span>
+        <span class="logo">🚀 Project Portal</span>
         <nav>
           <a href={`${base}/`}>The Project</a>
           <a href={`${base}/team/`}>The Team</a>
@@ -31,3 +31,51 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </main>
   </body>
 </html>
+
+<style is:global>
+  :root {
+    --bg-color: #11111b;
+    --card-bg: #181825;
+    --border-color: #313244;
+    --text-color: #cdd6f4;
+    --subtext-color: #a6adc8;
+    --accent-color: #89b4fa;
+  }
+  body {
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  .navbar {
+    border-bottom: 1px solid var(--border-color);
+    background: rgba(24, 24, 37, 0.95);
+    position: sticky;
+    top: 0;
+  }
+  .nav-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-weight: bold;
+    color: #f5e0dc;
+  }
+  nav a {
+    color: var(--subtext-color);
+    text-decoration: none;
+    margin-left: 1.5rem;
+  }
+  nav a:hover {
+    color: var(--accent-color);
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+</style>

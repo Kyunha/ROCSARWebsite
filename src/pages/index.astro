@@ -1,23 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { ROCSAR_INFO } from '../data';
+import { ROCSAR_INFO, SPONSORS } from '../data'; // Ensure SPONSORS array is defined in data or use fallback below
 
-// Required to map image paths correctly on GitHub Pages
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+// Default fallback sponsors if not imported from data
+const sponsorList = SPONSORS || [
+  { name: "ESA Education", category: "Institutional Partner", logoUrl: "" },
+  { name: "FEUP", category: "Academic Sponsor", logoUrl: "" },
+  { name: "Swedish Space Corp", category: "Flight Provider", logoUrl: "" },
+  { name: "ZARM", category: "Technical Partner", logoUrl: "" }
+];
 ---
 
-<Layout title={`${ROCSAR_INFO.name} | Overview`}>
+<Layout title={`${ROCSAR_INFO.name} | Payload Overview`}>
   <section class="hero">
-    <h1>{ROCSAR_INFO.name}</h1>
+    <div class="badge-wrapper">
+      <span class="badge">REXUS/BEXUS CAMPAIGN</span>
+    </div>
+    <h1 class="sober-title">{ROCSAR_INFO.name}</h1>
     <h2 class="tagline">{ROCSAR_INFO.tagline}</h2>
     <p class="description">{ROCSAR_INFO.description}</p>
   </section>
 
   <section class="section">
-    <h2>Mission Objectives</h2>
+    <div class="section-header">
+      <h2>Mission Objectives</h2>
+    </div>
     <div class="grid-3">
       {ROCSAR_INFO.objectives.map(obj => (
-        <div class="card">
+        <div class="glass-card">
           <h3>{obj.title}</h3>
           <p>{obj.desc}</p>
         </div>
@@ -26,12 +38,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   </section>
 
   <section class="section">
-    <h2>Project Timeline</h2>
+    <div class="section-header">
+      <h2>Flight Campaign Timeline</h2>
+    </div>
     <div class="timeline">
       {ROCSAR_INFO.timeline.map(item => (
         <div class="timeline-item">
-          <div class="date">{item.date}</div>
-          <div class="content">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <span class="date">{item.date}</span>
             <h3>{item.title}</h3>
             <p>{item.desc}</p>
           </div>
@@ -41,13 +56,39 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   </section>
 
   <section class="section">
-    <h2>Hardware & Design</h2>
+    <div class="section-header">
+      <h2>Hardware & Engineering</h2>
+    </div>
     <div class="grid-3">
       {ROCSAR_INFO.designPhotos.map(photo => (
         <div class="photo-card">
-          <!-- The base URL is prepended so GitHub Pages finds the public folder -->
-          <img src={`${base}/${photo.url}`} alt={photo.caption} onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'200\\' fill=\\'%23313244\\'><rect width=\\'100%\\' height=\\'100%\\'/><text x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%23a6adc8\\'>Image Placeholder</text></svg>'"/>
+          <div class="image-wrapper">
+            <img 
+              src={`${base}/${photo.url}`} 
+              alt={photo.caption} 
+              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'200\\' fill=\\'%2312151d\\'><rect width=\\'100%\\' height=\\'100%\\'/><text x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%23475569\\' font-family=\\'sans-serif\\' font-size=\\'12\\'>Hardware Asset</text></svg>'"
+            />
+          </div>
           <p class="caption">{photo.caption}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Sponsors Section -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Sponsors & Partners</h2>
+    </div>
+    <div class="sponsors-grid">
+      {sponsorList.map(sponsor => (
+        <div class="sponsor-card">
+          {sponsor.logoUrl ? (
+            <img src={`${base}/${sponsor.logoUrl}`} alt={sponsor.name} class="sponsor-logo" />
+          ) : (
+            <div class="sponsor-placeholder">{sponsor.name}</div>
+          )}
+          <span class="sponsor-type">{sponsor.category}</span>
         </div>
       ))}
     </div>
@@ -55,30 +96,220 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 </Layout>
 
 <style>
-  .hero { text-align: center; margin-bottom: 4rem; }
-  h1 { font-size: 2.5rem; color: #f5e0dc; margin-bottom: 0.5rem; }
-  .tagline { color: var(--accent-color); font-size: 1.25rem; margin-top: 0; }
-  .description { color: var(--subtext-color); font-size: 1.1rem; line-height: 1.6; max-width: 700px; margin: 1rem auto; }
+  .hero { 
+    text-align: center; 
+    margin-bottom: 5rem;
+  }
+  .badge-wrapper {
+    margin-bottom: 1.25rem;
+  }
+  .badge { 
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid var(--card-border);
+    color: var(--accent-slate); 
+    font-size: 0.7rem; 
+    letter-spacing: 0.14em;
+    font-weight: 500;
+    padding: 0.35rem 0.85rem; 
+    border-radius: 4px; 
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .sober-title { 
+    font-size: 2.8rem; 
+    font-weight: 700;
+    margin: 0 0 0.5rem 0; 
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+  .tagline { 
+    color: var(--text-secondary); 
+    font-size: 1.05rem; 
+    font-weight: 400;
+    margin-top: 0; 
+    letter-spacing: 0.01em;
+  }
+  .description { 
+    color: var(--accent-muted); 
+    font-size: 1rem; 
+    line-height: 1.7; 
+    max-width: 680px; 
+    margin: 1.5rem auto 0 auto; 
+    font-weight: 300;
+  }
   
-  h2 { border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; color: #cba6f7; margin-bottom: 1.5rem; }
+  .section { margin-bottom: 4.5rem; }
+  .section-header h2 { 
+    font-size: 1.25rem; 
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem; 
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .section-header h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--card-border);
+  }
+
+  .grid-3 { 
+    display: grid; 
+    gap: 1.25rem; 
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+  }
   
-  .section { margin-bottom: 4rem; }
-  .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .glass-card { 
+    background: var(--card-bg); 
+    padding: 1.75rem; 
+    border-radius: 8px; 
+    border: 1px solid var(--card-border); 
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .glass-card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+  }
+  .glass-card h3 { 
+    margin-top: 0; 
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary); 
+    letter-spacing: -0.01em;
+  }
+  .glass-card p { 
+    color: var(--text-secondary); 
+    font-size: 0.88rem; 
+    line-height: 1.6; 
+    margin-bottom: 0;
+    font-weight: 300;
+  }
   
-  .card { background: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); }
-  .card h3 { margin-top: 0; color: #f5e0dc; }
-  .card p { color: var(--subtext-color); font-size: 0.95rem; line-height: 1.5; margin-bottom: 0;}
+  /* Sober Timeline */
+  .timeline { 
+    border-left: 1px solid var(--card-border); 
+    padding-left: 1.5rem; 
+    margin-left: 0.5rem; 
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .timeline-item { position: relative; }
+  .timeline-node {
+    position: absolute;
+    left: -1.82rem;
+    top: 0.3rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-slate);
+  }
+  .date { 
+    font-size: 0.73rem; 
+    color: var(--accent-muted); 
+    font-family: 'JetBrains Mono', monospace; 
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .timeline-content h3 { 
+    margin: 0.2rem 0 0.4rem 0; 
+    color: var(--text-primary); 
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  .timeline-content p { 
+    margin: 0; 
+    color: var(--text-secondary); 
+    font-size: 0.88rem; 
+    line-height: 1.5;
+    font-weight: 300;
+  }
   
-  /* Timeline styling */
-  .timeline { border-left: 2px solid var(--border-color); padding-left: 1.5rem; margin-left: 1rem; }
-  .timeline-item { margin-bottom: 1.5rem; position: relative; }
-  .timeline-item::before { content: ''; position: absolute; left: -1.85rem; top: 0.25rem; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-color); }
-  .date { font-size: 0.85rem; color: var(--accent-color); font-family: monospace; font-weight: bold; }
-  .content h3 { margin: 0.25rem 0; color: #f5e0dc; }
-  .content p { margin: 0; color: var(--subtext-color); font-size: 0.95rem; }
-  
-  /* Photo styling */
-  .photo-card { background: var(--card-bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
-  .photo-card img { width: 100%; height: 200px; object-fit: cover; display: block; background: #313244; }
-  .caption { padding: 1rem; margin: 0; text-align: center; color: var(--subtext-color); font-size: 0.9rem; font-weight: 500; }
+  /* Photos */
+  .photo-card { 
+    background: var(--card-bg); 
+    border-radius: 8px; 
+    overflow: hidden; 
+    border: 1px solid var(--card-border); 
+    transition: border-color 0.2s ease;
+  }
+  .photo-card:hover {
+    border-color: var(--card-border-hover);
+  }
+  .image-wrapper {
+    height: 180px;
+    overflow: hidden;
+    background: #12151d;
+  }
+  .photo-card img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+  }
+  .photo-card:hover img {
+    filter: grayscale(0%);
+  }
+  .caption { 
+    padding: 0.85rem; 
+    margin: 0; 
+    text-align: center; 
+    color: var(--text-secondary); 
+    font-size: 0.82rem; 
+    font-weight: 400; 
+    border-top: 1px solid var(--card-border);
+  }
+
+  /* Sponsors Grid */
+  .sponsors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .sponsor-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  .sponsor-card:hover {
+    border-color: var(--card-border-hover);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .sponsor-placeholder {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+  .sponsor-logo {
+    max-height: 40px;
+    max-width: 100%;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(0.8);
+    opacity: 0.7;
+    transition: all 0.25s ease;
+  }
+  .sponsor-card:hover .sponsor-logo {
+    filter: grayscale(0%) brightness(1);
+    opacity: 1;
+  }
+  .sponsor-type {
+    font-size: 0.7rem;
+    color: var(--accent-muted);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 </style>
